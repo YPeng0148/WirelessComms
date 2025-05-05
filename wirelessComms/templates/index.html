@@ -7,7 +7,7 @@
     const server_ip = window.location.origin;
     let vValue = 0.0, wValue = 0.0;
 
-    // add turbo here as a speed level
+    // Speed Levels
     const speedLevels = { low: 0.3, medium: 0.6, high: 0.8, turbo: 1.0 };
     let currentSpeed = speedLevels.medium;
 
@@ -19,26 +19,22 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      // wire up Low/Med/High buttons
+      // Low/Med/High buttons
       ['low','medium','high'].forEach(level => {
         document.getElementById(`speed-${level}`)
           .addEventListener('click', () => {
             currentSpeed = speedLevels[level];
-            // highlight only that button
             document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(`speed-${level}`).classList.add('active');
-            // turn off turbo highlight
             document.getElementById('turbo-btn').classList.remove('on');
           });
       });
 
-      // turbo as a click-toggle
+      // turbo button
       const turboBtn = document.getElementById('turbo-btn');
       turboBtn.addEventListener('click', () => {
         currentSpeed = speedLevels.turbo;
-        // clear Low/Med/High highlights
         document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
-        // highlight turbo
         turboBtn.classList.add('on');
       });
 
@@ -95,7 +91,7 @@
         else wValue = 0;
       }
 
-      // mouse events
+      // mouse control
       joystick.addEventListener('mousedown', e => {
         updateStick(e.offsetX, e.offsetY);
         document.addEventListener('mousemove', move);
@@ -104,7 +100,7 @@
       function move(e) { updateStick(e.offsetX, e.offsetY); }
       function up(e)   { resetStick(); document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up); }
 
-      // touch events
+      // touch control
       let touchId = null;
       joystick.addEventListener('touchstart', e => {
         for (let t of e.changedTouches) {
